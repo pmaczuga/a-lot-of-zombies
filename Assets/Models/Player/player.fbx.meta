@@ -1,35 +1,23 @@
 fileFormatVersion: 2
-guid: 12a67943c3a359d47a1c0e7fa0264b1b
+guid: d03b59ed5e5f08544b6c5bcfc6b8a84c
 ModelImporter:
   serializedVersion: 19300
   internalIDToNameTable:
   - first:
-      74: 8385908113120301535
-    second: ZombieArmature|Attack
+      74: -5107191440812793959
+    second: PlayerArmature|Die
   - first:
-      74: -2503842313187300592
-    second: ZombieArmature|Die
+      74: 4359434235833535880
+    second: PlayerArmature|Hit
   - first:
-      74: -1215046099863851219
-    second: ZombieArmature|Hit
+      74: 4826743432947276201
+    second: PlayerArmature|Idle
   - first:
-      74: 7599570501886586290
-    second: ZombieArmature|Idle
+      74: 199366884485362299
+    second: PlayerArmature|Run
   - first:
-      74: 6389887694214335081
-    second: ZombieArmature|Walk
-  - first:
-      74: 5405049140907857085
-    second: ZombieArmature|WalkRM
-  - first:
-      74: -6263453678290240770
-    second: ZombieArmature|WalkVar
-  - first:
-      74: 2441552224010184402
-    second: ZombieArmature|WalkVarRM
-  - first:
-      74: 334286364430676006
-    second: ZombieArmature|WalkVarRM.001
+      74: 637686244178792263
+    second: PlayerArmature|RunRM
   externalObjects: {}
   materials:
     materialImportMode: 1
