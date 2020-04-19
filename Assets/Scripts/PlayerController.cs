@@ -8,9 +8,12 @@ public class PlayerController : MonoBehaviour
 
     private Animator animator;
     private CharacterController characterController;
+
     private Vector3 prevDir = Vector3.forward;
     private Vector3 dir = Vector3.zero;
     private float yPos;
+    private int hitHash;
+    private int dieHash;
 
     // Start is called before the first frame update
     void Start()
@@ -18,6 +21,9 @@ public class PlayerController : MonoBehaviour
         characterController = GetComponent<CharacterController>();
         animator = GetComponent<Animator>();
         yPos = transform.position.y;
+
+        hitHash = Animator.StringToHash("Base Layer.Hit");
+        dieHash = Animator.StringToHash("Base Layer.Die");
     }
 
     // Update is called once per frame
@@ -38,13 +44,36 @@ public class PlayerController : MonoBehaviour
         {
             prevDir = dir;
         }
-        transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(prevDir), 0.2f);
-        characterController.Move(dir.normalized * speed * Time.deltaTime);
+        if (CanMove())
+        {
+            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(prevDir), 0.2f);
+            characterController.Move(dir.normalized * speed * Time.deltaTime);
 
-        animator.SetFloat("Speed", characterController.velocity.magnitude);
+            animator.SetFloat("Speed", characterController.velocity.magnitude);
+        }
+
 
         Vector3 temp = transform.position;
         temp.y = yPos;
         transform.position = temp;
+    }
+
+    private bool CanMove()
+    {
+        if (animator.GetCurrentAnimatorStateInfo(0).fullPathHash == hitHash)
+        {
+            return false;
+        }
+        if (animator.GetCurrentAnimatorStateInfo(0).fullPathHash == dieHash)
+        {
+            return false;
+        }
+
+        return true;
+    }
+
+    public void DealDamage(int amount)
+    {
+        animator.SetTrigger("Hit");
     }
 }

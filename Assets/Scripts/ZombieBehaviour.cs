@@ -6,7 +6,10 @@ using UnityEngine.AI;
 public class ZombieBehaviour : MonoBehaviour
 {
     public Transform player;
-    public float distanceToAttack = 1.8f;
+    public Transform raycastStart;
+    public float distanceToAttack = 0.9f;
+    public float attackRange = 1f;
+    public int damage = 10;
 
     private Animator animator;
     private NavMeshAgent agent;
@@ -24,25 +27,51 @@ public class ZombieBehaviour : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Debug.Log(agent.isStopped);
+
         agent.destination = player.position;
+        agent.isStopped = !CanMove();
         animator.SetFloat("Speed", agent.velocity.magnitude);
-        if (agent.remainingDistance < distanceToAttack)
+
+        RaycastHit hit;
+        if (Physics.Raycast(raycastStart.position, transform.forward, out hit, distanceToAttack))
         {
-            Vector3 lookPos = player.position - transform.position;
-            lookPos.y = 0;
-            Quaternion rotation = Quaternion.LookRotation(lookPos);
-            transform.rotation = Quaternion.Slerp(transform.rotation, rotation, Time.deltaTime);
-            agent.isStopped = true;
             animator.SetBool("Attack", true);
-        } 
+        }
         else
         {
             animator.SetBool("Attack", false);
         }
 
-        if (animator.GetCurrentAnimatorStateInfo(0).fullPathHash != attackHash)
+        if (agent.velocity == Vector3.zero)
         {
-            agent.isStopped = false;
+            Vector3 lookPos = player.position - transform.position;
+            lookPos.y = 0;
+            Quaternion rotation = Quaternion.LookRotation(lookPos);
+            transform.rotation = Quaternion.Slerp(transform.rotation, rotation, Time.deltaTime * 5);
         }
+    }
+
+    public void ZombieAttackHitEvent()
+    {
+        RaycastHit hit;
+        if (Physics.Raycast(raycastStart.position, transform.forward, out hit, distanceToAttack))
+        {
+            if (hit.collider.gameObject.tag == "Player")
+            {
+                PlayerController pc = hit.collider.gameObject.GetComponent<PlayerController>();
+                pc.DealDamage(damage);
+            }
+        }
+    }
+
+    private bool CanMove()
+    {
+        if (animator.GetCurrentAnimatorStateInfo(0).fullPathHash == attackHash)
+        {
+            return false;
+        }
+            
+        return true;
     }
 }
