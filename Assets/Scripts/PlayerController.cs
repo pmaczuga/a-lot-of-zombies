@@ -2,11 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : CharachterBehaviour
 {
     public float speed = 2.0f;
 
-    private Animator animator;
     private CharacterController characterController;
 
     private Vector3 prevDir = Vector3.forward;
@@ -16,10 +15,11 @@ public class PlayerController : MonoBehaviour
     private int dieHash;
 
     // Start is called before the first frame update
-    void Start()
+    override protected void Start()
     {
+        base.Start();
+        
         characterController = GetComponent<CharacterController>();
-        animator = GetComponent<Animator>();
         yPos = transform.position.y;
 
         hitHash = Animator.StringToHash("Base Layer.Hit");
@@ -27,8 +27,11 @@ public class PlayerController : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    override protected void Update()
     {
+        if (isDead)
+            return;
+
         dir = Vector3.zero;
 
         if (Input.GetAxis("Horizontal") > 0)
@@ -70,10 +73,5 @@ public class PlayerController : MonoBehaviour
         }
 
         return true;
-    }
-
-    public void DealDamage(int amount)
-    {
-        animator.SetTrigger("Hit");
     }
 }

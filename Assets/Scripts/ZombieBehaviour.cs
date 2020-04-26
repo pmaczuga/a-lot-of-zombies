@@ -3,31 +3,31 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class ZombieBehaviour : MonoBehaviour
+public class ZombieBehaviour : MonsterBehaviour
 {
     public Transform player;
     public Transform raycastStart;
     public float distanceToAttack = 0.9f;
     public float attackRange = 1f;
-    public int damage = 10;
 
-    private Animator animator;
-    private NavMeshAgent agent;
     private int attackHash;
+    private int hitHash;
 
     // Start is called before the first frame update
-    void Start()
+    override protected void Start()
     {
+        base.Start();
         animator = GetComponent<Animator>();
-        agent = GetComponent<UnityEngine.AI.NavMeshAgent>();
 
         attackHash = Animator.StringToHash("Base Layer.Attack");
+        hitHash = Animator.StringToHash("Base Layer.Hit");
     }
 
     // Update is called once per frame
-    void Update()
+    override protected void Update()
     {
-        Debug.Log(agent.isStopped);
+        if (isDead)
+            return;
 
         agent.destination = player.position;
         agent.isStopped = !CanMove();
@@ -55,12 +55,12 @@ public class ZombieBehaviour : MonoBehaviour
     public void ZombieAttackHitEvent()
     {
         RaycastHit hit;
-        if (Physics.Raycast(raycastStart.position, transform.forward, out hit, distanceToAttack))
+        if (Physics.Raycast(raycastStart.position, transform.forward, out hit, attackRange))
         {
             if (hit.collider.gameObject.tag == "Player")
             {
-                PlayerController pc = hit.collider.gameObject.GetComponent<PlayerController>();
-                pc.DealDamage(damage);
+                CharachterBehaviour cb = hit.collider.gameObject.GetComponent<CharachterBehaviour>();
+                cb.ApplyDamage(damage);
             }
         }
     }
@@ -68,10 +68,16 @@ public class ZombieBehaviour : MonoBehaviour
     private bool CanMove()
     {
         if (animator.GetCurrentAnimatorStateInfo(0).fullPathHash == attackHash)
-        {
             return false;
-        }
-            
+        else if (animator.GetCurrentAnimatorStateInfo(0).fullPathHash == hitHash)
+            return false;
+
         return true;
+    }
+
+   override public void Die()
+    {
+        base.Die();
+        agent.isStopped = true;
     }
 }
