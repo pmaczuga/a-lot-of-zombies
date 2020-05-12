@@ -26,6 +26,7 @@ public class CharachterBehaviour : MonoBehaviour
         health -= damage;
         if (health <= 0)
         {
+            health = 0;
             Die();
         }
         else

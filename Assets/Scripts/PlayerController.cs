@@ -13,6 +13,7 @@ public class PlayerController : CharachterBehaviour
     private float yPos;
     private int hitHash;
     private int dieHash;
+    private UIScript uiScript;
 
     // Start is called before the first frame update
     override protected void Start()
@@ -20,6 +21,7 @@ public class PlayerController : CharachterBehaviour
         base.Start();
         
         characterController = GetComponent<CharacterController>();
+        uiScript = GameObject.Find("UIText").GetComponent<UIScript>();
         yPos = transform.position.y;
 
         hitHash = Animator.StringToHash("Base Layer.Hit");
@@ -31,6 +33,8 @@ public class PlayerController : CharachterBehaviour
     {
         if (isDead)
             return;
+
+        uiScript.SetHealth(health);
 
         dir = Vector3.zero;
 

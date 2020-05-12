@@ -5,11 +5,11 @@ using UnityEngine.AI;
 
 public class ZombieBehaviour : MonsterBehaviour
 {
-    public Transform player;
     public Transform raycastStart;
     public float distanceToAttack = 0.9f;
     public float attackRange = 1f;
 
+    private Transform player;
     private int attackHash;
     private int hitHash;
 
@@ -18,6 +18,7 @@ public class ZombieBehaviour : MonsterBehaviour
     {
         base.Start();
         animator = GetComponent<Animator>();
+        player = GameObject.FindGameObjectsWithTag("Player")[0].transform;
 
         attackHash = Animator.StringToHash("Base Layer.Attack");
         hitHash = Animator.StringToHash("Base Layer.Hit");
@@ -34,7 +35,7 @@ public class ZombieBehaviour : MonsterBehaviour
         animator.SetFloat("Speed", agent.velocity.magnitude);
 
         RaycastHit hit;
-        if (Physics.Raycast(raycastStart.position, transform.forward, out hit, distanceToAttack))
+        if (Physics.Raycast(raycastStart.position, transform.forward, out hit, distanceToAttack) && hit.transform.gameObject.tag == "Player")
         {
             animator.SetBool("Attack", true);
         }
