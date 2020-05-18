@@ -8,6 +8,7 @@ public class UIScript : MonoBehaviour
 {
     public float multiplierTime = 1.0f;
     public Text text;
+    public Text deathScore;
 
     private int health = 100;
     private int score = 0;
@@ -28,6 +29,7 @@ public class UIScript : MonoBehaviour
             multiplier = 1;
 
         text.text = "Health: " + health + "\nScore: " + score + "\nMultiplier: " + multiplier;
+        deathScore.text = score.ToString();
 
     }
 

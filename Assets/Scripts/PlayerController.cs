@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerController : CharachterBehaviour
 {
     public float speed = 2.0f;
+    public GameObject deathScreen;
 
     private CharacterController characterController;
 
@@ -32,7 +33,10 @@ public class PlayerController : CharachterBehaviour
     override protected void Update()
     {
         if (isDead)
+        {
+            deathScreen.SetActive(true);
             return;
+        }
 
         uiScript.SetHealth(health);
 
