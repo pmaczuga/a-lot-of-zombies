@@ -14,6 +14,8 @@ public class UIScript : MonoBehaviour
     private int score = 0;
     private int multiplier = 1;
     private float timeToEndMultiplier = 0.0f;
+    private int currentWave;
+    private int totalWaves;
 
     // Start is called before the first frame update
     void Start()
@@ -28,7 +30,7 @@ public class UIScript : MonoBehaviour
         if (timeToEndMultiplier <= 0)
             multiplier = 1;
 
-        text.text = "Health: " + health + "\nScore: " + score + "\nMultiplier: " + multiplier;
+        text.text = "Health: " + health + "\nScore: " + score + "\nMultiplier: " + multiplier + "\nWave: " + (currentWave + 1) + "/" + totalWaves;
         deathScore.text = score.ToString();
 
     }
@@ -43,5 +45,15 @@ public class UIScript : MonoBehaviour
         this.score += score * multiplier;
         multiplier += 1;
         timeToEndMultiplier = multiplierTime;
+    }
+
+    public void SetCurrentWave(int currentWave)
+    {
+        this.currentWave = currentWave;
+    }
+
+    public void SetTotalWaves(int totalWaves)
+    {
+        this.totalWaves = totalWaves;
     }
 }

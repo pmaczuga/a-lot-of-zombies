@@ -4,15 +4,17 @@ using UnityEngine;
 
 public class SpawnerScript : MonoBehaviour
 {
+    private WaveScript waveScript;
     public GameObject enemy;
-    public int amount = 0;
+    private int amount = 0;
 
     private bool canSpawn = true;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        waveScript = GameObject.Find("WaveManager").GetComponent<WaveScript>();
+        waveScript.AddSpawner(this);
     }
 
     // Update is called once per frame
@@ -41,7 +43,7 @@ public class SpawnerScript : MonoBehaviour
         canSpawn = false;
     }
 
-    void SetAmount(int amount)
+    public void SetAmount(int amount)
     {
         this.amount = amount;
     }
