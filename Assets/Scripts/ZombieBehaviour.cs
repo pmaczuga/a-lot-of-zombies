@@ -12,6 +12,7 @@ public class ZombieBehaviour : MonsterBehaviour
     private Transform player;
     private int attackHash;
     private int hitHash;
+    private WaveScript waveScript;
 
     // Start is called before the first frame update
     override protected void Start()
@@ -19,6 +20,8 @@ public class ZombieBehaviour : MonsterBehaviour
         base.Start();
         animator = GetComponent<Animator>();
         player = GameObject.FindGameObjectsWithTag("Player")[0].transform;
+
+        waveScript = GameObject.Find("WaveManager").GetComponent<WaveScript>();
 
         attackHash = Animator.StringToHash("Base Layer.Attack");
         hitHash = Animator.StringToHash("Base Layer.Hit");
@@ -80,5 +83,6 @@ public class ZombieBehaviour : MonsterBehaviour
     {
         base.Die();
         agent.isStopped = true;
+        waveScript.NotifyEnemyKilled();
     }
 }
