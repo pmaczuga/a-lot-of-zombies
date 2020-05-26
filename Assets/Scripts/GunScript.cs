@@ -9,13 +9,16 @@ public class GunScript : MonoBehaviour
     public float angle = 10.0f;
     public int shotsCount = 1;
     public GameObject shotRay;
+    public AudioClip gunShotSound;
 
     protected Transform gunEnd;
+    protected AudioSource audioSource;
 
     // Start is called before the first frame update
     void Start()
     {
         gunEnd = transform.Find("GunEnd");
+        audioSource = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -24,6 +27,7 @@ public class GunScript : MonoBehaviour
         Debug.DrawRay(gunEnd.position, -transform.up);
         if (Input.GetButtonDown("Fire1"))
         {
+            audioSource.PlayOneShot(gunShotSound);
             for (int i = 0; i < shotsCount; i++)
             {
                 RaycastHit hit;

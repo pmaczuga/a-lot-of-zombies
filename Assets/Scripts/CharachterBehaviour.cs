@@ -6,14 +6,18 @@ using UnityEngine.AI;
 public class CharachterBehaviour : MonoBehaviour
 {
     public int health;
+    public AudioClip damageSound;
+    public AudioClip deathSound;
 
     protected bool isDead = false;
     protected Animator animator;
+    protected AudioSource audioSource;
 
     // Start is called before the first frame update
     virtual protected void Start()
     {
         animator = GetComponent<Animator>();
+        audioSource = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -26,11 +30,13 @@ public class CharachterBehaviour : MonoBehaviour
         health -= damage;
         if (health <= 0)
         {
+            audioSource.PlayOneShot(deathSound);
             health = 0;
             Die();
         }
         else
         {
+            audioSource.PlayOneShot(damageSound);
             animator.SetTrigger("Hit");
         }
     }
