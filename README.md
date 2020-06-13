@@ -2,6 +2,11 @@
 
 Prosta gra tworzona na silniku Unity w ramach przedmiotu: technologie gier komputerowych.
 
+Do zagrania:    
+https://pmaczuga.github.io/
+
+# Wstępne założenia
+
 ## Inspiracja
 **Boxhead 2**
 
@@ -93,3 +98,16 @@ Blender - program do tworzenia modeli 3d, oraz animacji
 - Wiele rodzajów broni
 - Bohater może zdobywać umiejętności (np. większa szybkość, większa częstotliwość strzałów)
 - Plansze generowane proceduralnie
+
+# Co zostało zrobione
+
+Udało się zaimplementować większość z założonej funkcjonalności - zabijanie nadchodzących fal przeciwników aż do śmierci.
+
+- Własnoręcznie i zanimowane wykonane modele - zombi i gracz (w progarmie Blender)
+- Jedna broń - pistolet
+- System obrażeń wraz z odpowienimi animacjami - gracz i przeciwnicy
+- Dźwięki wystrzałów i ranionych postaci - z Asset Store
+- 2 plansze
+- Punkty za zabójstwa wraz z opisanym wcześniej systemem kombo (mnożnika)\
+- Highscores
+- Proste UI - punkty życia, numer fali, ilość przeciwników
