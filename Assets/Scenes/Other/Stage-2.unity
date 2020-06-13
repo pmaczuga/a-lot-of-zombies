@@ -3615,6 +3615,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 330e6de079bdfe843af7fcf8de07a2d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  deathScreen: {fileID: 1007625073}
+  waveSizes: 03000000060000000c0000001800000030000000
 --- !u!4 &660432271
 Transform:
   m_ObjectHideFlags: 0

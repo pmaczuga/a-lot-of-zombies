@@ -7,7 +7,8 @@ public class WaveScript : MonoBehaviour
 {
     private List<SpawnerScript> spawners = new List<SpawnerScript>();
     private UIScript uiScript;
-    private int[] waveSizes = { 3, 6 };
+    public GameObject deathScreen;
+    public int[] waveSizes = { 3, 6, 12, 24, 48 };
     private int waveIndex = -1;
     private int enemiesLeft;
     // Start is called before the first frame update
@@ -26,7 +27,7 @@ public class WaveScript : MonoBehaviour
         }
         if (waveIndex + 1 == waveSizes.Length)
         {
-            //todo next stage
+            deathScreen.SetActive(true);
             return;
         }
         StartCoroutine(NextWave());

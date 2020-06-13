@@ -876,6 +876,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 330e6de079bdfe843af7fcf8de07a2d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  waveSizes: 0300000006000000
 --- !u!4 &141803480
 Transform:
   m_ObjectHideFlags: 0
