@@ -7,8 +7,8 @@ public class PlayerController : CharachterBehaviour
     public float speed = 2.0f;
     public GameObject deathScreen;
 
+    private float timeToDeathScreen = 1.0f;
     private CharacterController characterController;
-
     private Vector3 prevDir = Vector3.forward;
     private Vector3 dir = Vector3.zero;
     private float yPos;
@@ -34,10 +34,6 @@ public class PlayerController : CharachterBehaviour
     {
         if (isDead)
         {
-            Time.timeScale = 0f;
-            PauseMenu.GameIsPaused = true;
-            DeathScreen.GameOver = true;
-            deathScreen.SetActive(true);
             return;
         }
 
@@ -84,5 +80,21 @@ public class PlayerController : CharachterBehaviour
         }
 
         return true;
+    }
+
+    override public void Die()
+    {
+        base.Die();
+        StartCoroutine(ShowDeathScreenAfter(timeToDeathScreen));
+    }
+
+    private IEnumerator ShowDeathScreenAfter(float time)
+    {
+        yield return new WaitForSeconds(time);
+
+        Time.timeScale = 0f;
+        PauseMenu.GameIsPaused = true;
+        DeathScreen.GameOver = true;
+        deathScreen.SetActive(true);
     }
 }
