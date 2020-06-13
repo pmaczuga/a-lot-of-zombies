@@ -7,6 +7,8 @@ using UnityEngine.UI;
 
 public class DeathScreen : MonoBehaviour
 {
+    public static bool GameOver = false;
+
     public GameObject inputField;
     public Text score;
 

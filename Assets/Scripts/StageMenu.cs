@@ -86,13 +86,8 @@ public class StageMenu : MonoBehaviour
 
     private void ChangeStagePreview()
     {
-        Texture2D tex = null;
-        if (File.Exists("Assets/Images/Stage-" + currentStage + ".JPG"))
-        {
-            byte[] fileData = File.ReadAllBytes("Assets/Images/Stage-" + currentStage + ".JPG");
-            tex = new Texture2D(2, 2);
-            tex.LoadImage(fileData);
-            stagePreview.texture = tex;
-        }
+        // load texture from resource folder
+        Texture2D tex = Resources.Load<Texture2D>("Images/Stage-" + currentStage);
+        stagePreview.texture = tex;
     }
 }

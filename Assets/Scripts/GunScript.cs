@@ -25,7 +25,7 @@ public class GunScript : MonoBehaviour
     void Update()
     {
         Debug.DrawRay(gunEnd.position, -transform.up);
-        if (Input.GetButtonDown("Fire1"))
+        if (PauseMenu.GameIsPaused == false && Input.GetButtonDown("Fire1"))
         {
             audioSource.PlayOneShot(gunShotSound);
             for (int i = 0; i < shotsCount; i++)

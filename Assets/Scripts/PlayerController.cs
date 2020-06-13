@@ -34,6 +34,9 @@ public class PlayerController : CharachterBehaviour
     {
         if (isDead)
         {
+            Time.timeScale = 0f;
+            PauseMenu.GameIsPaused = true;
+            DeathScreen.GameOver = true;
             deathScreen.SetActive(true);
             return;
         }
