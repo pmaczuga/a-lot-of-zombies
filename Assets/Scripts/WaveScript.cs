@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
 using UnityEngine;
@@ -7,45 +8,44 @@ public class WaveScript : MonoBehaviour
 {
     private List<SpawnerScript> spawners = new List<SpawnerScript>();
     private UIScript uiScript;
-    public GameObject deathScreen;
-    public int[] waveSizes = { 3, 6, 12, 24, 48 };
+    public int waveSize = 3;
+    public double waveMultiplier = 1.5;
     private int waveIndex = -1;
     private int enemiesLeft;
+    private bool pause = false;
     // Start is called before the first frame update
     void Start()
     {
         uiScript = GameObject.Find("UIText").GetComponent<UIScript>();
-        uiScript.SetTotalWaves(waveSizes.Length);
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (enemiesLeft > 0)
+        uiScript.SetNumZombies(enemiesLeft);
+        if (!pause && enemiesLeft == 0)
         {
-            return;
+            StartCoroutine(NextWave());
         }
-        if (waveIndex + 1 == waveSizes.Length)
-        {
-            deathScreen.SetActive(true);
-            return;
-        }
-        StartCoroutine(NextWave());
     }
 
     IEnumerator NextWave()
     {
-        waveIndex++;
-        enemiesLeft = waveSizes[waveIndex];
-
+        pause = true;
         yield return new WaitForSeconds(5);
 
+        waveIndex++;
+        enemiesLeft = waveSize;
+
+        pause = false;
+
         Debug.Log("Wave started: " + waveIndex);
+
         uiScript.SetCurrentWave(waveIndex);
 
         int[] amountPerSpawner = new int[spawners.Count];
         int i = 0;
-        while (i < waveSizes[waveIndex])
+        while (i < waveSize)
         {
             amountPerSpawner[i++ % spawners.Count]++;
         }
@@ -54,6 +54,7 @@ public class WaveScript : MonoBehaviour
         {
             spawners[i].SetAmount(amountPerSpawner[i]);
         }
+        waveSize = (int)Math.Ceiling(waveSize * waveMultiplier);
     }
 
     public void AddSpawner(SpawnerScript spawner)
